@@ -1,0 +1,22 @@
+# Python cache and build artifacts
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# VSCode and environment
+.vscode/
+*.env
+.env
+.idea/
+venv/
+
+# Model and output files
+*.h5
+*.ckpt
+*.log
+*.npz
+
+# OS-specific files
+.DS_Store
+Thumbs.db
