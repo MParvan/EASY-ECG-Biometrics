@@ -11,7 +11,8 @@ from scipy.signal import butter, filtfilt
 
 class preprocess:
     """
-    A collection of ECG preprocessing utilities including bandpass filtering and normalization.
+    A collection of ECG preprocessing utilities including (lowpass, bandpass, and highpass) filtering, Median filtering, Moving Average filtering,
+    Polynomial Line fitting, Wavelet Transform, and Deep Learning-based methods.
     """
 
     def __init__(self, fs: float = 250.0, lowcut: float = 0.5, highcut: float = 40.0, order: int = 5):

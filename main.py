@@ -170,7 +170,7 @@ def main():
         model.compile(optimizer='adam', loss='sparse_categorical_crossentropy', metrics=['accuracy'])
 
         # Train
-        model.fit(X_train, y_train, epochs=3, batch_size=32, validation_data=(X_val, y_val))
+        model.fit(X_train, y_train, epochs=30, batch_size=32, validation_data=(X_val, y_val))
 
         # Evaluate
         utils.evaluate_identification(model, X_test, y_test)
