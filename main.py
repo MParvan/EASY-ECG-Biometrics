@@ -23,6 +23,8 @@ from segmentation.rcentered import RCentered
 from utils.utils import ECGUtils
 from models.deepecg import DeepECGModel
 from models.siamese import SiameseECGModel
+from models.multibranch import MultiBranchECGModel
+from models.transformer import TransformerModel
 
 # # Example config
 # # DATA_PATH = "datasets/ECG-ID/"
@@ -71,9 +73,10 @@ def get_parser(**parser_kwargs):
                         choices=["identification", "verification"],
                         help="choose a recognition task")
 
+    parser.add_argument("--model", type=str, default="MultiBranchECGModel",
+                        choices=["DeepECGModel", "SiameseECGModel", "MultiBranchECGModel", "TransformerModel"],
+                        help="choose a model architecture")
 
-    
-    
     args = parser.parse_args()
 
     return args
@@ -164,7 +167,9 @@ def main():
         X_train, X_val, y_train, y_val = train_test_split(X, y, test_size=0.2, stratify=y)
 
         # Build and compile model
-        model_builder = DeepECGModel(input_shape=X.shape[1:], num_classes=len(y))
+        # model_builder = DeepECGModel(input_shape=X.shape[1:], num_classes=len(y))
+        model_class = globals()[args.model]
+        model_builder = model_class(input_shape=X.shape[1:], num_classes=len(y))
         model = model_builder.build()
         model.compile(optimizer='adam', loss='sparse_categorical_crossentropy', metrics=['accuracy'])
 
