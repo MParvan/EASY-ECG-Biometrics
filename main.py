@@ -14,9 +14,11 @@ from datasets.heartprint import HeartPrintDataset
 from torch.utils.data import DataLoader
 import torch
 import os
-from config import FS, SAMPLE_LENGTH
 from sklearn.model_selection import train_test_split
 
+import config
+from config import CONFIG
+from preprocessing.filters import Preprocess
 from segmentation.rcentered import RCentered
 from utils.utils import ECGUtils
 from models.deepecg import DeepECGModel
@@ -62,8 +64,8 @@ def get_parser(**parser_kwargs):
                         help="sessions for testing (e.g. --test_sessions Session-3L)")
     
     parser.add_argument("--preprocessing", type=str, default="bandpass",
-                        choices=["bandpass", "median", "CGAN"],
-                        help="choose an available preprocessing method")
+                        help=("Preprocessing method (e.g., bandpass5-0.5-40, median7, "
+                              "highpass4-20, lowpass4-30). Default is bandpass5-0.5-40"))
     
     parser.add_argument("--task", type=str, default="identification",
                         choices=["identification", "verification"],
@@ -82,6 +84,8 @@ def main():
 
     datasets_path = os.path.join(os.getcwd(), "datasets")
     data_path = os.path.join(datasets_path, args.Data)
+    FS = CONFIG[args.Data]["fs"]
+    SAMPLE_LENGTH = CONFIG[args.Data]["sample_length"]
     dataset = HeartPrintDataset.get_all_recordings(data_path)
     
     X, y = [], []
@@ -99,10 +103,9 @@ def main():
                         signal = [float(line.strip()) for line in f.readlines()[:SAMPLE_LENGTH]]
                         signal = np.array(signal)
                         preprocessing_method = args.preprocessing
-                        if preprocessing_method=="bandpass":
-                            from preprocessing.bandpass import preprocess
-                            pp = preprocess()
-                            signal_P = pp.preprocess(signal)
+                            
+                        pp = Preprocess(dataset_name=args.Data, config=CONFIG)
+                        signal_P = pp.apply(signal, method=preprocessing_method)
                         
                     ss = RCentered()    
                     segments = ss.segment(signal_P)
@@ -136,13 +139,9 @@ def main():
     
                     # Preprocessing
                     preprocessing_method = args.preprocessing
-                    if preprocessing_method == "bandpass":
-                        from preprocessing.bandpass import preprocess
-                        pp = preprocess()
-                        signal_P = pp.preprocess(signal)
-                    else:
-                        signal_P = signal
-    
+                    pp = Preprocess(dataset_name=args.Data, config=CONFIG)
+                    signal_P = pp.apply(signal, method=preprocessing_method)
+
                     # Segmentation
                     ss = RCentered()
                     segments = ss.segment(signal_P)
