@@ -1,9 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Thu Jul 10 16:24:39 2025
-
-@author: milad
-"""
 
 import numpy as np
 import neurokit2 as nk

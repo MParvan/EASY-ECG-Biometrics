@@ -1,9 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Mon Jul  7 12:28:12 2025
-
-@author: milad
-"""
 
 import os
 import glob

@@ -1,9 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Mon Jul  7 12:04:41 2025
-
-@author: milad
-"""
 
 import numpy as np
 from datasets.ecg_id import ECGIDDataset
@@ -207,7 +201,6 @@ def main():
 
         utils.evaluate_verification(model, X1_test, X2_test, y_test)
     
-
 
     
 if __name__ == '__main__':

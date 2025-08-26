@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+
 """
 Multi-Branch Network with Attention-Enhanced Residual Blocks for ECG Biometrics
 Adapted from: ECG Biometrics Based on Attention-Enhanced Domain Adaptive Feature Fusion Network
