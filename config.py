@@ -1,11 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Tue Jul  8 11:44:34 2025
-
-@author: milad
-"""
-
-# config.py
 
 CONFIG = {
     "Heartprint": {

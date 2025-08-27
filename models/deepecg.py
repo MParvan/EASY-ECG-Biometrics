@@ -1,9 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Thu Jul 10 16:44:31 2025
-
-@author: milad
-"""
 
 import tensorflow as tf
 from tensorflow.keras import layers, models
