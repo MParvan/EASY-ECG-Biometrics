@@ -54,3 +54,4 @@ def load_data_experiment1():
 
 X, y = load_data_experiment1()
 print(f"Loaded training data shape: {X.shape}, Labels shape: {y.shape}")
+print(y)  # Print labels to verify
